@@ -13,13 +13,13 @@ public class WeatherServiceImpl implements IWeatherService {
     private final ModelMapper modelMapper;
 
     @Override
-    public WeatherApiResponseDto getDaily(String city, String country) {
-        WeatherApiResponseDto response1 = weatherApiService.makeADailyRequest(city, country);
+    public WeatherApiResponseDto getWeatherForecast(String city, String country, String choice) {
+        WeatherApiResponseDto response1 = weatherApiService.callVisualCrossingApi(city, country, choice);
         WeatherApiResponseDto response = modelMapper.map(response1, WeatherApiResponseDto.class);
         return response;
     }
 
-    @Override
+/*    @Override
     public WeatherApiResponseDto getWeekly(String city, String country) {
         WeatherApiResponseDto response1 = weatherApiService.makeAWeeklyRequest(city, country);
         WeatherApiResponseDto response = modelMapper.map(response1, WeatherApiResponseDto.class);
@@ -31,5 +31,5 @@ public class WeatherServiceImpl implements IWeatherService {
         WeatherApiResponseDto response1 = weatherApiService.makeAMonthlyRequest(city, country);
         WeatherApiResponseDto response = modelMapper.map(response1, WeatherApiResponseDto.class);
         return response;
-    }
+    }*/
 }

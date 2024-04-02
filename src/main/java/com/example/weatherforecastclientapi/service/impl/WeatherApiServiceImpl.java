@@ -1,6 +1,7 @@
 package com.example.weatherforecastclientapi.service.impl;
 
 import com.example.weatherforecastclientapi.client.dto.response.WeatherApiResponseDto;
+import com.example.weatherforecastclientapi.exception.BusinessException;
 import com.example.weatherforecastclientapi.service.IWeatherApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,15 +22,30 @@ public class WeatherApiServiceImpl implements IWeatherApiService {
     private final RestTemplate restTemplate;
 
     @Override
-    public WeatherApiResponseDto makeADailyRequest(String city, String country) {
+    public WeatherApiResponseDto callVisualCrossingApi(String city, String country, String choice) {
+        String endpoint;
+        if (choice == null) {
+            endpoint = apiUrl + city + "/" + country + "?include=days&unitGroup=metric&key=" + apiKey;
+        } else {
+            switch (choice) {
+                case "daily" ->
+                        endpoint = apiUrl + city + "," + country + "/" + LocalDate.now() + "?include=days&unitGroup=metric&key=" + apiKey;
+                case "weekly" ->
+                        endpoint = apiUrl + city + "," + country + "/next7days?include=days&unitGroup=metric&key=" + apiKey;
+                case "monthly" ->
+                        endpoint = apiUrl + city + "," + country + "/next30days?include=days&unitGroup=metric&key=" + apiKey;
+                default -> endpoint = apiUrl + city + "," + country + "?include=days&unitGroup=metric&key=" + apiKey;
+            }
+        }
+        try {
+            return restTemplate.getForObject(endpoint, WeatherApiResponseDto.class);
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
+        }
 
-        String now = LocalDate.now().toString();
-
-        String endpoint = apiUrl + city + "," + country + "/" + now + "?include=days&unitGroup=metric&key=" + apiKey;
-        return restTemplate.getForObject(endpoint, WeatherApiResponseDto.class);
     }
 
-    @Override
+    /*@Override
     public WeatherApiResponseDto makeAWeeklyRequest(String city, String country) {
         String endpoint = apiUrl + city + "," + country + "/next7days?include=days&unitGroup=metric&key=" + apiKey;
         return restTemplate.getForObject(endpoint, WeatherApiResponseDto.class);
@@ -39,6 +55,6 @@ public class WeatherApiServiceImpl implements IWeatherApiService {
     public WeatherApiResponseDto makeAMonthlyRequest(String city, String country) {
         String endpoint = apiUrl + city + "," + country + "/next30days?include=days&unitGroup=metric&key=" + apiKey;
         return restTemplate.getForObject(endpoint, WeatherApiResponseDto.class);
-    }
+    }*/
 
 }
