@@ -25,7 +25,7 @@ public class WeatherApiServiceImpl implements IWeatherApiService {
     public WeatherApiResponseDto callVisualCrossingApi(String city, String country, String choice) {
         String endpoint;
         if (choice == null) {
-            endpoint = apiUrl + city + "/" + country + "?include=days&unitGroup=metric&key=" + apiKey;
+            endpoint = apiUrl + city + "," + country + "?include=days&unitGroup=metric&key=" + apiKey;
         } else {
             switch (choice) {
                 case "daily" ->
@@ -42,7 +42,6 @@ public class WeatherApiServiceImpl implements IWeatherApiService {
         } catch (Exception e) {
             throw new BusinessException(e.getMessage());
         }
-
     }
 
     /*@Override
