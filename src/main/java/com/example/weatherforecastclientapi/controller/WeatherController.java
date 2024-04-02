@@ -4,10 +4,7 @@ import com.example.weatherforecastclientapi.client.dto.response.WeatherApiRespon
 import com.example.weatherforecastclientapi.service.impl.WeatherServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,20 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class WeatherController {
     private final WeatherServiceImpl weatherService;
 
-    @GetMapping("/daily/{city}")
-    public ResponseEntity<WeatherApiResponseDto> getDaily(@PathVariable String city, @PathVariable String country) {
+    @GetMapping("/daily")
+    public ResponseEntity<WeatherApiResponseDto> getDaily(@RequestParam String city, @RequestParam String country) {
         WeatherApiResponseDto response = weatherService.getDaily(city,country);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/weekly/{city}")
-    public ResponseEntity<WeatherApiResponseDto> getWeekly(@PathVariable String city, @PathVariable String country) {
+    @GetMapping("/weekly")
+    public ResponseEntity<WeatherApiResponseDto> getWeekly(@RequestParam String city, @RequestParam String country) {
         WeatherApiResponseDto response = weatherService.getWeekly(city,country);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/monthly/{city}")
-    public ResponseEntity<WeatherApiResponseDto> getMonthly(@PathVariable String city, @PathVariable String country) {
+    @GetMapping("/monthly")
+    public ResponseEntity<WeatherApiResponseDto> getMonthly(@RequestParam String city, @RequestParam String country) {
         WeatherApiResponseDto response = weatherService.getMonthly(city,country);
         return ResponseEntity.ok(response);
     }
