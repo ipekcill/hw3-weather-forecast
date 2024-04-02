@@ -15,8 +15,7 @@ public class WeatherServiceImpl implements IWeatherService {
     @Override
     public WeatherApiResponseDto getWeatherForecast(String city, String country, String choice) {
         WeatherApiResponseDto response1 = weatherApiService.callVisualCrossingApi(city, country, choice);
-        WeatherApiResponseDto response = modelMapper.map(response1, WeatherApiResponseDto.class);
-        return response;
+        return modelMapper.map(response1, WeatherApiResponseDto.class);
     }
 
 /*    @Override
