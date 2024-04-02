@@ -1,6 +1,6 @@
 package com.example.weatherforecastclientapi.controller;
 
-import com.example.weatherforecastclientapi.client.dto.response.WeatherApiResponseDto;
+import com.example.weatherforecastclientapi.client.dto.response.MyWeatherApiResponse;
 import com.example.weatherforecastclientapi.controller.model.ApiResponse;
 import com.example.weatherforecastclientapi.service.impl.WeatherServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +20,11 @@ public class WeatherController {
     private final WeatherServiceImpl weatherService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<WeatherApiResponseDto>> getWeatherForecast(@RequestParam String city, @RequestParam String country, @RequestParam(required = false) String choice) {
-        WeatherApiResponseDto response = weatherService.getWeatherForecast(city, country, choice);
-        ApiResponse<WeatherApiResponseDto> apiResponse = ApiResponse.<WeatherApiResponseDto>builder()
+    public ResponseEntity<ApiResponse<MyWeatherApiResponse>> getWeatherForecast(@RequestParam String city,
+                                                                                @RequestParam String country,
+                                                                                @RequestParam(required = false) String choice) {
+        MyWeatherApiResponse response = weatherService.getWeatherForecast(city, country, choice);
+        ApiResponse<MyWeatherApiResponse> apiResponse = ApiResponse.<MyWeatherApiResponse>builder()
                 .data(response)
                 .message("Weather forecast taken")
                 .dateTime(LocalDate.now())

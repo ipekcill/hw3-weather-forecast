@@ -1,34 +1,22 @@
 package com.example.weatherforecastclientapi.service.impl;
 
+import com.example.weatherforecastclientapi.client.dto.response.MyWeatherApiResponse;
 import com.example.weatherforecastclientapi.client.dto.response.WeatherApiResponseDto;
+import com.example.weatherforecastclientapi.converter.ResponseConverter;
 import com.example.weatherforecastclientapi.service.IWeatherService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class WeatherServiceImpl implements IWeatherService {
     private final WeatherApiServiceImpl weatherApiService;
-    private final ModelMapper modelMapper;
+    private final ResponseConverter responseConverter;
 
     @Override
-    public WeatherApiResponseDto getWeatherForecast(String city, String country, String choice) {
+    public MyWeatherApiResponse getWeatherForecast(String city, String country, String choice) {
         WeatherApiResponseDto response1 = weatherApiService.callVisualCrossingApi(city, country, choice);
-        return modelMapper.map(response1, WeatherApiResponseDto.class);
+        return responseConverter.toMyWeatherApiResponse(response1);
     }
 
-/*    @Override
-    public WeatherApiResponseDto getWeekly(String city, String country) {
-        WeatherApiResponseDto response1 = weatherApiService.makeAWeeklyRequest(city, country);
-        WeatherApiResponseDto response = modelMapper.map(response1, WeatherApiResponseDto.class);
-        return response;
-    }
-
-    @Override
-    public WeatherApiResponseDto getMonthly(String city, String country) {
-        WeatherApiResponseDto response1 = weatherApiService.makeAMonthlyRequest(city, country);
-        WeatherApiResponseDto response = modelMapper.map(response1, WeatherApiResponseDto.class);
-        return response;
-    }*/
 }

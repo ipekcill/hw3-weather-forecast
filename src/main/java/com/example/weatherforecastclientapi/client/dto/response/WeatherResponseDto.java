@@ -27,4 +27,7 @@ public class WeatherResponseDto {
     private String conditions;
 
     private String description;
+
+    private double latitude;
+    private double longitude;
 }

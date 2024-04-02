@@ -43,17 +43,4 @@ public class WeatherApiServiceImpl implements IWeatherApiService {
             throw new BusinessException(e.getMessage());
         }
     }
-
-    /*@Override
-    public WeatherApiResponseDto makeAWeeklyRequest(String city, String country) {
-        String endpoint = apiUrl + city + "," + country + "/next7days?include=days&unitGroup=metric&key=" + apiKey;
-        return restTemplate.getForObject(endpoint, WeatherApiResponseDto.class);
-    }
-
-    @Override
-    public WeatherApiResponseDto makeAMonthlyRequest(String city, String country) {
-        String endpoint = apiUrl + city + "," + country + "/next30days?include=days&unitGroup=metric&key=" + apiKey;
-        return restTemplate.getForObject(endpoint, WeatherApiResponseDto.class);
-    }*/
-
 }
